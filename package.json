@@ -1,0 +1,32 @@
+{
+  "name": "frontend-project-lvl2",
+  "version": "1.0.0",
+  "description": "Hexlet JS Project #2",
+  "main": "index.js",
+  "keywords": [],
+  "type": "module",
+  "author": "Vitaly Melnikov <vmelnikov@bk.ru> (https://github.com/Vmelnikoff)",
+  "license": "ISC",
+  "bin": {
+    "gendiff": "bin/gendiff.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vmelnikoff/frontend-project-lvl2.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Vmelnikoff/frontend-project-lvl2/issues"
+  },
+  "homepage": "https://github.com/Vmelnikoff/frontend-project-lvl2#readme",
+  "devDependencies": {
+    "eslint": "7.2.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.21.2"
+  },
+  "dependencies": {
+    "commander": "^5.1.0"
+  }
+}
