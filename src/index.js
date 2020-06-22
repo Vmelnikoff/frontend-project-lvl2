@@ -1,8 +1,13 @@
-import program from 'commander';
+import commander from 'commander';
 
-const programm = program
+const program = commander
   .version('1.0.0')
   .description('Compares two configuration files and shows a difference.')
+  .option('-f, --format [type]', 'output format')
+  .arguments('<filepath1> <filepath2>')
+  .action((filepath1, filepath2) => {
+    console.log(filepath1, filepath2)
+  })
   .parse(process.argv);
 
-export default programm;
+export default program;

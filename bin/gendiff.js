@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 
-import programm from '../src/index.js';
+import program from '../src/index.js';
