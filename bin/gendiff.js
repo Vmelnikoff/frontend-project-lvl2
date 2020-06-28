@@ -13,5 +13,3 @@ commander
     console.log(genDiff(filepath1, filepath2));
   });
 commander.parse(process.argv);
-
-export default genDiff;
