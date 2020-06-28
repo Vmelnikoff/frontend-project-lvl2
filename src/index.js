@@ -1,5 +1,3 @@
-// CLI Builder for node.js command-line interfaces - https://github.com/tj/commander.js/
-import commander from 'commander';
 // Lodash utility library - https://lodash.com/
 import _ from 'lodash';
 // File System Node Module - https://nodejs.org/api/fs.html
@@ -41,16 +39,4 @@ const getObjsFromFiles = (filepath1, filepath2) => {
   return [jsonObj1, jsonObj2];
 };
 
-const program = commander
-  .version('1.0.0')
-  .description('Compares two configuration files and shows a difference.')
-  .option('-f, --format [type]', 'output format')
-  .arguments('<filepath1> <filepath2>')
-  .action((filepath1, filepath2) => {
-    const result = parseJsonObj(getObjsFromFiles(filepath1, filepath2));
-    console.log(result);
-    return result;
-  })
-  .parse(process.argv);
-
-export default program;
+export default (filepath1, filepath2) => parseJsonObj(getObjsFromFiles(filepath1, filepath2));
