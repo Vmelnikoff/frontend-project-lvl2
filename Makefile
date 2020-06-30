@@ -6,7 +6,6 @@ publish:
 	npm publish --dry-run
 
 link:
-	npm unlink
 	npm link
 
 lint:

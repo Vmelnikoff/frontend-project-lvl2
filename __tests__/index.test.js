@@ -13,3 +13,16 @@ test('parse json', () => {
   + verbose: true
 }`);
 });
+
+test('parse yaml', () => {
+  expect(genDiff('__fixtures__/before.yml', '__fixtures__/after.yml'))
+    .toEqual(`
+{
+    host: hexlet.io
+  - timeout: 50
+  + timeout: 20
+  - proxy: 123.234.53.22
+  - follow: false
+  + verbose: true
+}`);
+});
