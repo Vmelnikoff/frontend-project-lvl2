@@ -6,6 +6,8 @@ import fs from 'fs';
 import path from 'path';
 // JS-YAML parser - https://github.com/nodeca/js-yaml
 import yaml from 'js-yaml';
+// INI parser - https://github.com/npm/ini
+import ini from 'ini';
 
 const parseJsonObj = ([jsonObj1, jsonObj2]) => {
   const keys = _.union(Object.keys(jsonObj1), Object.keys(jsonObj2));
@@ -44,6 +46,11 @@ export default (filepath1, filepath2) => {
       return parseJsonObj([
         yaml.safeLoad(getDataFromFile(filepath1)),
         yaml.safeLoad(getDataFromFile(filepath2)),
+      ]);
+    case '.ini':
+      return parseJsonObj([
+        ini.parse(getDataFromFile(filepath1)),
+        ini.parse(getDataFromFile(filepath2)),
       ]);
     default:
       return 'No parser for this extension or different extension';

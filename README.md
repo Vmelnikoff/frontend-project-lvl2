@@ -28,10 +28,10 @@ gendiff filepath1 filepath2
 
 ## Demo
 
-[![asciicast](https://asciinema.org/a/Znr1wLIAYH3keeFkqSC0ZUu5m.svg)](https://asciinema.org/a/Znr1wLIAYH3keeFkqSC0ZUu5m)
+[![asciicast](https://asciinema.org/a/FNE7YQQ0JZ18JHbkVwdA6X6yq.svg)](https://asciinema.org/a/FNE7YQQ0JZ18JHbkVwdA6X6yq)
 
 ## Run tests
 
-[![asciicast](https://asciinema.org/a/ehqmkvq97SqTJeyIPVjx3mbhd.svg)](https://asciinema.org/a/ehqmkvq97SqTJeyIPVjx3mbhd)
+[![asciicast](https://asciinema.org/a/NcyA2wIbW34peDrqacoHDG4Xr.svg)](https://asciinema.org/a/NcyA2wIbW34peDrqacoHDG4Xr)
 
 
