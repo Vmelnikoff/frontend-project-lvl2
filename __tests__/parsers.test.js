@@ -1,24 +1,28 @@
 import { test, expect, describe } from '@jest/globals';
-import parsers from '../src/parsers';
+import parsers, { readFile } from '../src/parsers';
 
-const expectedResult = `
-{
-    host: hexlet.io
-  - timeout: 50
-  + timeout: 20
-  - proxy: 123.234.53.22
-  - follow: false
-  + verbose: true
-}`;
+describe('Parser module for plain objects', () => {
+  const expectedPlainResult = readFile('__fixtures__/plainResult.txt').trimRight();
+  const plainCases = [
+    ['json', '__fixtures__/before.json', '__fixtures__/after.json', expectedPlainResult],
+    ['yaml', '__fixtures__/before.yml', '__fixtures__/after.yml', expectedPlainResult],
+    ['ini', '__fixtures__/before.ini', '__fixtures__/after.ini', expectedPlainResult],
+  ];
 
-const cases = [
-  ['json', '__fixtures__/before.json', '__fixtures__/after.json', expectedResult],
-  ['yaml', '__fixtures__/before.yml', '__fixtures__/after.yml', expectedResult],
-  ['ini', '__fixtures__/before.ini', '__fixtures__/after.ini', expectedResult],
-];
+  test.each(plainCases)('Compare two %s files and output differences',
+    (desc, filepath1, filepath2, expected) => {
+      expect(parsers(filepath1, filepath2)).toEqual(expected);
+    });
+});
 
-describe('parsers module', () => {
-  test.each(cases)('%s parser', (desc, filepath1, filepath2, expected) => {
-    expect(parsers(filepath1, filepath2)).toEqual(expected);
-  });
+describe('Parser module for nested objects', () => {
+  const expectedNestedResult = readFile('__fixtures__/nestedResult.txt').trimRight();
+  const nestedCases = [
+    ['json', '__fixtures__/file1.json', '__fixtures__/file2.json', expectedNestedResult],
+  ];
+
+  test.each(nestedCases)('Compare two %s files and output differences',
+    (desc, filepath1, filepath2, expected) => {
+      expect(parsers(filepath1, filepath2)).toEqual(expected);
+    });
 });

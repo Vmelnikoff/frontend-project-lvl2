@@ -9,7 +9,10 @@ import yaml from 'js-yaml';
 // INI parser - https://github.com/npm/ini
 import ini from 'ini';
 
-const parseJsonObj = ([jsonObj1, jsonObj2]) => {
+const getPath = (filename) => `${path.resolve(process.cwd(), filename)}`;
+export const readFile = (filename) => fs.readFileSync(getPath(filename), 'utf-8');
+
+const parseJsonObj = (jsonObj1, jsonObj2) => {
   const keys = _.union(Object.keys(jsonObj1), Object.keys(jsonObj2));
   const result = keys.map((key) => {
     const [value1, value2] = [jsonObj1[key], jsonObj2[key]];
@@ -28,30 +31,23 @@ const parseJsonObj = ([jsonObj1, jsonObj2]) => {
   return ['\n{\n', ...result, '}'].join('');
 };
 
-const getDataFromFile = (filepath) => {
-  // Get current working dir
-  const cwd = process.cwd();
-  // Read data from file with absolute path
-  return fs.readFileSync(path.resolve(cwd, filepath), 'utf-8');
-};
-
 export default (filepath1, filepath2) => {
   switch (path.extname(filepath1) && path.extname(filepath2)) {
     case '.json':
-      return parseJsonObj([
-        JSON.parse(getDataFromFile(filepath1)),
-        JSON.parse(getDataFromFile(filepath2)),
-      ]);
+      return parseJsonObj(
+        JSON.parse(readFile(filepath1)),
+        JSON.parse(readFile(filepath2)),
+      );
     case '.yml':
-      return parseJsonObj([
-        yaml.safeLoad(getDataFromFile(filepath1)),
-        yaml.safeLoad(getDataFromFile(filepath2)),
-      ]);
+      return parseJsonObj(
+        yaml.safeLoad(readFile(filepath1)),
+        yaml.safeLoad(readFile(filepath2)),
+      );
     case '.ini':
-      return parseJsonObj([
-        ini.parse(getDataFromFile(filepath1)),
-        ini.parse(getDataFromFile(filepath2)),
-      ]);
+      return parseJsonObj(
+        ini.parse(readFile(filepath1)),
+        ini.parse(readFile(filepath2)),
+      );
     default:
       return 'No parser for this extension or different extension';
   }
