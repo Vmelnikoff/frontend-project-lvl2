@@ -11,7 +11,7 @@ describe('Parser module for plain objects', () => {
 
   test.each(plainCases)('Compare two %s files and output differences',
     (desc, filepath1, filepath2, expected) => {
-      expect(parsers(filepath1, filepath2)).toEqual(expected);
+      expect(parsers(filepath1, filepath2, 'plain')).toEqual(expected);
     });
 });
 
@@ -23,6 +23,6 @@ describe('Parser module for nested objects', () => {
 
   test.each(nestedCases)('Compare two %s files and output differences',
     (desc, filepath1, filepath2, expected) => {
-      expect(parsers(filepath1, filepath2)).toEqual(expected);
+      expect(parsers(filepath1, filepath2, 'stylish')).toEqual(expected);
     });
 });
