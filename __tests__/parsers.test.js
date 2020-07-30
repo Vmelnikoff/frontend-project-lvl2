@@ -9,7 +9,7 @@ describe('Parser module for plain objects', () => {
     ['ini', '__fixtures__/before.ini', '__fixtures__/after.ini', expectedPlainResult],
   ];
 
-  test.each(plainCases)('Compare two %s files and output differences',
+  test.each(plainCases)('Compare two plain %s files and output differences',
     (desc, filepath1, filepath2, expected) => {
       expect(parsers(filepath1, filepath2, 'plain')).toEqual(expected);
     });
@@ -21,7 +21,7 @@ describe('Parser module for nested objects', () => {
     ['json', '__fixtures__/file1.json', '__fixtures__/file2.json', expectedNestedResult],
   ];
 
-  test.each(nestedCases)('Compare two %s files and output differences',
+  test.each(nestedCases)('Compare two nested %s files and output differences',
     (desc, filepath1, filepath2, expected) => {
       expect(parsers(filepath1, filepath2, 'stylish')).toEqual(expected);
     });
