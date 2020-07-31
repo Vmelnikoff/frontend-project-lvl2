@@ -9,9 +9,7 @@ const stringify = (key, value, deep) => {
   }
 
   const objs = Object.entries(value)
-    .map(([key2, value2]) => {
-      return `${key2}: ${value2}`;
-    });
+    .map(([key2, value2]) => `${key2}: ${value2}`);
 
   return `{\n${getIndent(deep + 2)}${objs}\n${getIndent(deep)}}`;
 };
