@@ -8,7 +8,7 @@ import yaml from 'js-yaml';
 import ini from 'ini';
 
 import buildDiff from './buildDiff.js';
-import formatOutput from './formaters/formatOutput.js';
+import formatOutput from './formaters/index.js';
 
 const getPath = (filename) => `${path.resolve(process.cwd(), filename)}`;
 export const readFile = (filename) => fs.readFileSync(getPath(filename), 'utf-8');
