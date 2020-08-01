@@ -1,28 +1,28 @@
 import { test, expect, describe } from '@jest/globals';
 import parsers, { readFile } from '../src/parsers';
 
-describe('Parser module for plain objects', () => {
-  const expectedPlainResult = readFile('__fixtures__/plainResult.txt').trimRight();
-  const plainCases = [
-    ['json', '__fixtures__/before.json', '__fixtures__/after.json', expectedPlainResult],
-    ['yaml', '__fixtures__/before.yml', '__fixtures__/after.yml', expectedPlainResult],
-    ['ini', '__fixtures__/before.ini', '__fixtures__/after.ini', expectedPlainResult],
+describe('Parser module for stylish format', () => {
+  const expectedResult = readFile('__fixtures__/stylishResult.txt').trimRight();
+  const cases = [
+    ['json', '__fixtures__/file1.json', '__fixtures__/file2.json', expectedResult],
   ];
 
-  test.each(plainCases)('Compare two plain %s files and output differences',
+  test.each(cases)('Compare two nested %s files and output differences in stylish format',
     (desc, filepath1, filepath2, expected) => {
-      expect(parsers(filepath1, filepath2, 'plain')).toEqual(expected);
+      expect(parsers(filepath1, filepath2, 'stylish'))
+        .toEqual(expected);
     });
 });
 
-describe('Parser module for nested objects', () => {
-  const expectedNestedResult = readFile('__fixtures__/nestedResult.txt').trimRight();
-  const nestedCases = [
-    ['json', '__fixtures__/file1.json', '__fixtures__/file2.json', expectedNestedResult],
+describe('Parser module for plain format', () => {
+  const expectedResult = readFile('__fixtures__/plainResult.txt').trimRight();
+  const cases = [
+    ['json', '__fixtures__/file1.json', '__fixtures__/file2.json', expectedResult],
   ];
 
-  test.each(nestedCases)('Compare two nested %s files and output differences',
+  test.each(cases)('Compare two nested %s files and output differences in plain format',
     (desc, filepath1, filepath2, expected) => {
-      expect(parsers(filepath1, filepath2, 'stylish')).toEqual(expected);
+      expect(parsers(filepath1, filepath2, 'plain'))
+        .toEqual(expected);
     });
 });
