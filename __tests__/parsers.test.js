@@ -26,3 +26,16 @@ describe('Parser module for plain format', () => {
         .toEqual(expected);
     });
 });
+
+describe('Parser module for json format', () => {
+  const expectedResult = readFile('__fixtures__/jsonResult.json').trimRight();
+  const cases = [
+    ['json', '__fixtures__/file1.json', '__fixtures__/file2.json', expectedResult],
+  ];
+
+  test.each(cases)('Compare two nested %s files and output differences in json format',
+    (desc, filepath1, filepath2, expected) => {
+      expect(parsers(filepath1, filepath2, 'json'))
+        .toEqual(expected);
+    });
+});
