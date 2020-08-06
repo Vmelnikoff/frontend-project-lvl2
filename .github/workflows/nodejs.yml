@@ -50,12 +50,6 @@ jobs:
           make lint
 
       # name of job
-      - name: Run test
-        # Run Jest
-        run: |
-          make test
-
-      # name of job
       - name: Publish code coverage
         # Publish code coverage on Code Climate
         # https://github.com/paambaati/codeclimate-action
