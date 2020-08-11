@@ -1,6 +1,22 @@
 // Lodash utility library - https://lodash.com/
 import _ from 'lodash';
 
+const getCorrectTypeOfValue = (value) => {
+  const isIncorrectType = (finalValue) => (((typeof finalValue === 'string')
+    && (/^[\d]+$/.test(finalValue))));
+  const convertToNumber = (finalValue) => (isIncorrectType(finalValue)
+    ? parseInt(finalValue, 10) : finalValue);
+
+  if (!_.isObject(value)) {
+    return convertToNumber(value);
+  }
+
+  return Object.entries(value).reduce((acc, [key, objValue]) => ({
+    ...acc,
+    [key]: _.isObject(objValue) ? getCorrectTypeOfValue(objValue) : convertToNumber(objValue),
+  }), {});
+};
+
 const buildDiff = (oldJsonObj, newJsonObj) => {
   const keys = _.union(Object.keys(oldJsonObj), Object.keys(newJsonObj));
 
@@ -11,7 +27,7 @@ const buildDiff = (oldJsonObj, newJsonObj) => {
     if (!_.has(oldJsonObj, key)) {
       return {
         key,
-        value: newValue,
+        value: getCorrectTypeOfValue(newValue),
         type: 'added',
       };
     }
@@ -20,7 +36,7 @@ const buildDiff = (oldJsonObj, newJsonObj) => {
     if (!_.has(newJsonObj, key)) {
       return {
         key,
-        value: oldValue,
+        value: getCorrectTypeOfValue(oldValue),
         type: 'removed',
       };
     }
@@ -37,7 +53,7 @@ const buildDiff = (oldJsonObj, newJsonObj) => {
     return (oldValue === newValue)
       ? {
         key,
-        value: oldValue,
+        value: getCorrectTypeOfValue(oldValue),
         type: 'unchanged',
       }
       : {
