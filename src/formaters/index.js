@@ -11,7 +11,7 @@ const formatOutput = (diff, format) => {
     case 'json':
       return jsonFormat(diff);
     default:
-      return 'Unknown formatter';
+      throw new Error(`Unknown formatter - ${format}!`);
   }
 };
 
