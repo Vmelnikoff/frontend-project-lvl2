@@ -3,7 +3,6 @@ import path from 'path';
 import parse from './parsers.js';
 import formatOutput from './formaters/index.js';
 import buildDiff from './buildDiff.js';
-import normalizeContent from './normalizer.js';
 
 const getPath = (filename) => `${path.resolve(process.cwd(), filename)}`;
 const readFile = (filename) => fs.readFileSync(getPath(filename), 'utf-8');
@@ -15,7 +14,7 @@ export default (filepath1, filepath2, format = 'stylish') => {
   const oldContent = parse(readFile(filepath1), type);
   const newContent = parse(readFile(filepath2), type);
 
-  const diff = buildDiff(normalizeContent(oldContent), normalizeContent(newContent));
+  const diff = buildDiff(oldContent, newContent);
 
   return formatOutput(diff, format);
 };

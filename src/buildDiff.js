@@ -4,27 +4,27 @@ const buildDiff = (oldJsonObj, newJsonObj) => {
   const keys = _.union(Object.keys(oldJsonObj), Object.keys(newJsonObj));
 
   return keys.map((key) => {
-    const oldValue = oldJsonObj[key];
-    const newValue = newJsonObj[key];
+    const oldData = oldJsonObj[key];
+    const newData = newJsonObj[key];
 
     // no key in the old object
     if (!_.has(oldJsonObj, key)) {
-      return { key, value: newValue, type: 'added' };
+      return { key, value: newData, type: 'added' };
     }
 
     // no key in the new object
     if (!_.has(newJsonObj, key)) {
-      return { key, value: oldValue, type: 'removed' };
+      return { key, value: oldData, type: 'removed' };
     }
 
     // value of the same key in both structures is an object
-    if (_.isObject(oldValue) && _.isObject(newValue)) {
-      return { key, value: buildDiff(oldValue, newValue), type: 'nested' };
+    if (_.isObject(oldData) && _.isObject(newData)) {
+      return { key, value: buildDiff(oldData, newData), type: 'nested' };
     }
 
-    return (oldValue === newValue)
-      ? { key, value: oldValue, type: 'unchanged' }
-      : { key, value: { oldValue, newValue }, type: 'changed' };
+    return (oldData === newData)
+      ? { key, value: oldData, type: 'unchanged' }
+      : { key, value: { oldValue: oldData, newValue: newData }, type: 'changed' };
   });
 };
 

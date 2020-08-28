@@ -9,7 +9,7 @@ const formatOutput = (diff, format) => {
     case 'stylish':
       return stylishFormat(diff);
     case 'json':
-      return jsonFormat(diff);
+      return `\n${jsonFormat(diff)}`;
     default:
       throw new Error(`Unknown formatter - ${format}!`);
   }

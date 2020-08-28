@@ -1,30 +1,11 @@
-// Lodash utility library - https://lodash.com/
 import _ from 'lodash';
 
-const buildOutputStr = (key, value, type) => {
-  const prepareValue = (curValue) => {
-    if (_.isObject(curValue)) {
-      return '[complex value]';
-    }
-
-    return _.isBoolean(curValue) ? curValue : `'${curValue}'`;
-  };
-
-  let endStr;
-
-  if (type === 'removed') {
-    endStr = 'removed';
+const prepareValue = (curValue) => {
+  if (_.isObject(curValue)) {
+    return '[complex value]';
   }
 
-  if (type === 'added') {
-    endStr = `added with value: ${prepareValue(value)}`;
-  }
-
-  if (type === 'changed') {
-    endStr = `updated. From ${prepareValue(value.oldValue)} to ${prepareValue(value.newValue)}`;
-  }
-
-  return `Property '${key}' was ${endStr}`;
+  return _.isBoolean(curValue) ? curValue : `'${curValue}'`;
 };
 
 const plainFormat = (diff) => {
@@ -34,12 +15,18 @@ const plainFormat = (diff) => {
       .map((obj) => {
         const { key, value, type } = obj;
         const newKey = (oldKey === null) ? key : `${oldKey}.${key}`;
+        const beginStr = `Property '${newKey}' was`;
 
-        if (type !== 'nested') {
-          return `${buildOutputStr(newKey, value, type)}`;
+        switch (type) {
+          case 'removed':
+            return `${beginStr} removed`;
+          case 'added':
+            return `${beginStr} added with value: ${prepareValue(value)}`;
+          case 'changed':
+            return `${beginStr} updated. From ${prepareValue(value.oldValue)} to ${prepareValue(value.newValue)}`;
+          default:
+            return iter(value, newKey);
         }
-
-        return iter(value, newKey);
       });
 
     return output.flat();

@@ -1,4 +1,3 @@
-// Lodash utility library - https://lodash.com/
 import _ from 'lodash';
 
 const getIndent = (deep) => ' '.repeat(deep * 2);
