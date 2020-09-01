@@ -7,48 +7,42 @@ const stringify = (key, value, deep) => {
     return value;
   }
 
-  const objs = Object.entries(value)
+  const objs = Object
+    .entries(value)
     .map(([key2, value2]) => `${key2}: ${value2}`);
 
   return `{\n${getIndent(deep + 2)}${objs}\n${getIndent(deep)}}`;
 };
 
-const stylishFormat = (data) => {
+const stylishFormat = (diff) => {
   const deep = 1;
 
-  const iter = (node, level) => {
-    const result = node.map((obj) => {
-      const { key, value, type } = obj;
+  const iter = (node, level) => node.flatMap((obj) => {
+    const { key, value, type } = obj;
 
-      if (type === 'added') {
+    switch (type) {
+      case 'added':
         return `${getIndent(level)}+ ${key}: ${stringify(key, value, level + 1)}`;
-      }
-
-      if (type === 'removed') {
+      case 'removed':
         return `${getIndent(level)}- ${key}: ${stringify(key, value, level + 1)}`;
-      }
-
-      if (type === 'unchanged') {
-        return `${getIndent(level)}  ${key}: ${stringify(key, value, level + 1)}`;
-      }
-
-      if (type === 'changed') {
+      case 'changed':
         return [
           `${getIndent(level)}- ${key}: ${stringify(key, value.oldValue, level + 1)}`,
           `${getIndent(level)}+ ${key}: ${stringify(key, value.newValue, level + 1)}`,
         ];
-      }
+      case 'unchanged':
+        return `${getIndent(level)}  ${key}: ${stringify(key, value, level + 1)}`;
+      case 'nested':
+        return `${getIndent(level)}  ${key}: {\n${iter(value, level + 2)
+          .join('\n')}\n${getIndent(level + 1)}}`;
+      default:
+        throw new Error(`Unknown type - ${type}!`);
+    }
+  });
 
-      // Nested output
-      return `${getIndent(level)}  ${key}: {\n${iter(value, level + 2).join('\n')}\n${getIndent(level + 1)}}`;
-    });
+  const result = iter(diff, deep);
 
-    return result.flat();
-  };
-
-  const result = iter(data, deep);
-
-  return `\n{\n${result.join('\n')}\n}`;
+  return `{\n${result.join('\n')}\n}`;
 };
 
 export default stylishFormat;
