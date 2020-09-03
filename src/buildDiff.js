@@ -17,9 +17,9 @@ const buildDiff = (oldJsonObj, newJsonObj) => {
       return { key, value: oldData, type: 'removed' };
     }
 
-    // value of the same key in both structures is an object
+    // children of the same key in both structures is an object
     if (_.isObject(oldData) && _.isObject(newData)) {
-      return { key, value: buildDiff(oldData, newData), type: 'nested' };
+      return { key, children: buildDiff(oldData, newData), type: 'nested' };
     }
 
     return (oldData === newData)

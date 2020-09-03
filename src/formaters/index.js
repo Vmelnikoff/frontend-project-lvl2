@@ -3,8 +3,6 @@ import stylishFormat from './stylish.js';
 import jsonFormat from './json.js';
 
 const formatOutput = (diff, format) => {
-  console.log(diff);
-
   switch (format) {
     case 'plain':
       return plainFormat(diff);
