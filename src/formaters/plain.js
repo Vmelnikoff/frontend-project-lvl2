@@ -8,7 +8,7 @@ const prepareValue = (curValue) => {
   return _.isBoolean(curValue) ? curValue : `'${curValue}'`;
 };
 
-const prepareResultArr = (node, oldKey) => node
+const prepareResults = (node, oldKey) => node
   .filter((obj) => obj.type !== 'unchanged')
   .flatMap((obj) => {
     const {
@@ -25,12 +25,12 @@ const prepareResultArr = (node, oldKey) => node
       case 'changed':
         return `${beginStr} updated. From ${prepareValue(value.oldValue)} to ${prepareValue(value.newValue)}`;
       case 'nested':
-        return prepareResultArr(children, newKey);
+        return prepareResults(children, newKey);
       default:
         throw new Error(`Unknown type - ${type}!`);
     }
   });
 
-const plainFormat = (diff) => `${prepareResultArr(diff, null).join('\n')}`;
+const plainFormat = (diff) => `${prepareResults(diff, null).join('\n')}`;
 
 export default plainFormat;

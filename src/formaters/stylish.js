@@ -15,26 +15,26 @@ const stringify = (key, value, deep) => {
 };
 
 const stylishFormat = (diff) => {
-  const iter = (node, deep) => node.flatMap((obj) => {
+  const iter = (node, depth) => node.flatMap((obj) => {
     const {
       key, value, children, type,
     } = obj;
 
     switch (type) {
       case 'added':
-        return `${getIndent(deep)}+ ${key}: ${stringify(key, value, deep + 1)}`;
+        return `${getIndent(depth)}+ ${key}: ${stringify(key, value, depth + 1)}`;
       case 'removed':
-        return `${getIndent(deep)}- ${key}: ${stringify(key, value, deep + 1)}`;
+        return `${getIndent(depth)}- ${key}: ${stringify(key, value, depth + 1)}`;
       case 'changed':
         return [
-          `${getIndent(deep)}- ${key}: ${stringify(key, value.oldValue, deep + 1)}`,
-          `${getIndent(deep)}+ ${key}: ${stringify(key, value.newValue, deep + 1)}`,
+          `${getIndent(depth)}- ${key}: ${stringify(key, value.oldValue, depth + 1)}`,
+          `${getIndent(depth)}+ ${key}: ${stringify(key, value.newValue, depth + 1)}`,
         ];
       case 'unchanged':
-        return `${getIndent(deep)}  ${key}: ${stringify(key, value, deep + 1)}`;
+        return `${getIndent(depth)}  ${key}: ${stringify(key, value, depth + 1)}`;
       case 'nested':
-        return `${getIndent(deep)}  ${key}: {\n${iter(children, deep + 2)
-          .join('\n')}\n${getIndent(deep + 1)}}`;
+        return `${getIndent(depth)}  ${key}: {\n${iter(children, depth + 2)
+          .join('\n')}\n${getIndent(depth + 1)}}`;
       default:
         throw new Error(`Unknown type - ${type}!`);
     }
